@@ -1,0 +1,47 @@
+[
+{
+  "directory": "/home/unclegoga/Development/PM/proiect/build",
+  "command": "avr-g++  -I/home/unclegoga/Development/PM/proiect/inc  -Wall -Wextra -DF_CPU=16000000 -mmcu=atmega328p -O2 -std=gnu++11 -o CMakeFiles/template_project.elf.dir/src/adc.cpp.obj -c /home/unclegoga/Development/PM/proiect/src/adc.cpp",
+  "file": "/home/unclegoga/Development/PM/proiect/src/adc.cpp"
+},
+{
+  "directory": "/home/unclegoga/Development/PM/proiect/build",
+  "command": "avr-g++  -I/home/unclegoga/Development/PM/proiect/inc  -Wall -Wextra -DF_CPU=16000000 -mmcu=atmega328p -O2 -std=gnu++11 -o CMakeFiles/template_project.elf.dir/src/button_manager.cpp.obj -c /home/unclegoga/Development/PM/proiect/src/button_manager.cpp",
+  "file": "/home/unclegoga/Development/PM/proiect/src/button_manager.cpp"
+},
+{
+  "directory": "/home/unclegoga/Development/PM/proiect/build",
+  "command": "avr-g++  -I/home/unclegoga/Development/PM/proiect/inc  -Wall -Wextra -DF_CPU=16000000 -mmcu=atmega328p -O2 -std=gnu++11 -o CMakeFiles/template_project.elf.dir/src/chess_board.cpp.obj -c /home/unclegoga/Development/PM/proiect/src/chess_board.cpp",
+  "file": "/home/unclegoga/Development/PM/proiect/src/chess_board.cpp"
+},
+{
+  "directory": "/home/unclegoga/Development/PM/proiect/build",
+  "command": "avr-g++  -I/home/unclegoga/Development/PM/proiect/inc  -Wall -Wextra -DF_CPU=16000000 -mmcu=atmega328p -O2 -std=gnu++11 -o CMakeFiles/template_project.elf.dir/src/display.cpp.obj -c /home/unclegoga/Development/PM/proiect/src/display.cpp",
+  "file": "/home/unclegoga/Development/PM/proiect/src/display.cpp"
+},
+{
+  "directory": "/home/unclegoga/Development/PM/proiect/build",
+  "command": "avr-g++  -I/home/unclegoga/Development/PM/proiect/inc  -Wall -Wextra -DF_CPU=16000000 -mmcu=atmega328p -O2 -std=gnu++11 -o CMakeFiles/template_project.elf.dir/src/i2c.cpp.obj -c /home/unclegoga/Development/PM/proiect/src/i2c.cpp",
+  "file": "/home/unclegoga/Development/PM/proiect/src/i2c.cpp"
+},
+{
+  "directory": "/home/unclegoga/Development/PM/proiect/build",
+  "command": "avr-g++  -I/home/unclegoga/Development/PM/proiect/inc  -Wall -Wextra -DF_CPU=16000000 -mmcu=atmega328p -O2 -std=gnu++11 -o CMakeFiles/template_project.elf.dir/src/main.cpp.obj -c /home/unclegoga/Development/PM/proiect/src/main.cpp",
+  "file": "/home/unclegoga/Development/PM/proiect/src/main.cpp"
+},
+{
+  "directory": "/home/unclegoga/Development/PM/proiect/build",
+  "command": "avr-g++  -I/home/unclegoga/Development/PM/proiect/inc  -Wall -Wextra -DF_CPU=16000000 -mmcu=atmega328p -O2 -std=gnu++11 -o CMakeFiles/template_project.elf.dir/src/minichess.cpp.obj -c /home/unclegoga/Development/PM/proiect/src/minichess.cpp",
+  "file": "/home/unclegoga/Development/PM/proiect/src/minichess.cpp"
+},
+{
+  "directory": "/home/unclegoga/Development/PM/proiect/build",
+  "command": "avr-g++  -I/home/unclegoga/Development/PM/proiect/inc  -Wall -Wextra -DF_CPU=16000000 -mmcu=atmega328p -O2 -std=gnu++11 -o CMakeFiles/template_project.elf.dir/src/text_renderer.cpp.obj -c /home/unclegoga/Development/PM/proiect/src/text_renderer.cpp",
+  "file": "/home/unclegoga/Development/PM/proiect/src/text_renderer.cpp"
+},
+{
+  "directory": "/home/unclegoga/Development/PM/proiect/build",
+  "command": "avr-g++  -I/home/unclegoga/Development/PM/proiect/inc  -Wall -Wextra -DF_CPU=16000000 -mmcu=atmega328p -O2 -std=gnu++11 -o CMakeFiles/template_project.elf.dir/src/uart.cpp.obj -c /home/unclegoga/Development/PM/proiect/src/uart.cpp",
+  "file": "/home/unclegoga/Development/PM/proiect/src/uart.cpp"
+}
+]

@@ -1,0 +1,4 @@
+/home/unclegoga/Development/PM/proiect/build/CMakeFiles/template_project.elf.dir
+/home/unclegoga/Development/PM/proiect/build/CMakeFiles/flash.dir
+/home/unclegoga/Development/PM/proiect/build/CMakeFiles/edit_cache.dir
+/home/unclegoga/Development/PM/proiect/build/CMakeFiles/rebuild_cache.dir
