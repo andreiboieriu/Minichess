@@ -14,6 +14,7 @@ set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/home/unclegoga/Development/PM/proiect/src/display.cpp" "CMakeFiles/template_project.elf.dir/src/display.cpp.obj" "gcc" "CMakeFiles/template_project.elf.dir/src/display.cpp.obj.d"
   "/home/unclegoga/Development/PM/proiect/src/i2c.cpp" "CMakeFiles/template_project.elf.dir/src/i2c.cpp.obj" "gcc" "CMakeFiles/template_project.elf.dir/src/i2c.cpp.obj.d"
   "/home/unclegoga/Development/PM/proiect/src/main.cpp" "CMakeFiles/template_project.elf.dir/src/main.cpp.obj" "gcc" "CMakeFiles/template_project.elf.dir/src/main.cpp.obj.d"
+  "/home/unclegoga/Development/PM/proiect/src/millis.cpp" "CMakeFiles/template_project.elf.dir/src/millis.cpp.obj" "gcc" "CMakeFiles/template_project.elf.dir/src/millis.cpp.obj.d"
   "/home/unclegoga/Development/PM/proiect/src/minichess.cpp" "CMakeFiles/template_project.elf.dir/src/minichess.cpp.obj" "gcc" "CMakeFiles/template_project.elf.dir/src/minichess.cpp.obj.d"
   "/home/unclegoga/Development/PM/proiect/src/text_renderer.cpp" "CMakeFiles/template_project.elf.dir/src/text_renderer.cpp.obj" "gcc" "CMakeFiles/template_project.elf.dir/src/text_renderer.cpp.obj.d"
   "/home/unclegoga/Development/PM/proiect/src/uart.cpp" "CMakeFiles/template_project.elf.dir/src/uart.cpp.obj" "gcc" "CMakeFiles/template_project.elf.dir/src/uart.cpp.obj.d"

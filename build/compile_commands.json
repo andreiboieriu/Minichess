@@ -31,6 +31,11 @@
 },
 {
   "directory": "/home/unclegoga/Development/PM/proiect/build",
+  "command": "avr-g++  -I/home/unclegoga/Development/PM/proiect/inc  -Wall -Wextra -DF_CPU=16000000 -mmcu=atmega328p -O2 -std=gnu++11 -o CMakeFiles/template_project.elf.dir/src/millis.cpp.obj -c /home/unclegoga/Development/PM/proiect/src/millis.cpp",
+  "file": "/home/unclegoga/Development/PM/proiect/src/millis.cpp"
+},
+{
+  "directory": "/home/unclegoga/Development/PM/proiect/build",
   "command": "avr-g++  -I/home/unclegoga/Development/PM/proiect/inc  -Wall -Wextra -DF_CPU=16000000 -mmcu=atmega328p -O2 -std=gnu++11 -o CMakeFiles/template_project.elf.dir/src/minichess.cpp.obj -c /home/unclegoga/Development/PM/proiect/src/minichess.cpp",
   "file": "/home/unclegoga/Development/PM/proiect/src/minichess.cpp"
 },

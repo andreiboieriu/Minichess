@@ -153,10 +153,24 @@ CMakeFiles/template_project.elf.dir/src/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/template_project.elf.dir/src/main.cpp.s"
 	avr-g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/unclegoga/Development/PM/proiect/src/main.cpp -o CMakeFiles/template_project.elf.dir/src/main.cpp.s
 
+CMakeFiles/template_project.elf.dir/src/millis.cpp.obj: CMakeFiles/template_project.elf.dir/flags.make
+CMakeFiles/template_project.elf.dir/src/millis.cpp.obj: ../src/millis.cpp
+CMakeFiles/template_project.elf.dir/src/millis.cpp.obj: CMakeFiles/template_project.elf.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/unclegoga/Development/PM/proiect/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/template_project.elf.dir/src/millis.cpp.obj"
+	avr-g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/template_project.elf.dir/src/millis.cpp.obj -MF CMakeFiles/template_project.elf.dir/src/millis.cpp.obj.d -o CMakeFiles/template_project.elf.dir/src/millis.cpp.obj -c /home/unclegoga/Development/PM/proiect/src/millis.cpp
+
+CMakeFiles/template_project.elf.dir/src/millis.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/template_project.elf.dir/src/millis.cpp.i"
+	avr-g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/unclegoga/Development/PM/proiect/src/millis.cpp > CMakeFiles/template_project.elf.dir/src/millis.cpp.i
+
+CMakeFiles/template_project.elf.dir/src/millis.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/template_project.elf.dir/src/millis.cpp.s"
+	avr-g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/unclegoga/Development/PM/proiect/src/millis.cpp -o CMakeFiles/template_project.elf.dir/src/millis.cpp.s
+
 CMakeFiles/template_project.elf.dir/src/minichess.cpp.obj: CMakeFiles/template_project.elf.dir/flags.make
 CMakeFiles/template_project.elf.dir/src/minichess.cpp.obj: ../src/minichess.cpp
 CMakeFiles/template_project.elf.dir/src/minichess.cpp.obj: CMakeFiles/template_project.elf.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/unclegoga/Development/PM/proiect/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/template_project.elf.dir/src/minichess.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/unclegoga/Development/PM/proiect/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/template_project.elf.dir/src/minichess.cpp.obj"
 	avr-g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/template_project.elf.dir/src/minichess.cpp.obj -MF CMakeFiles/template_project.elf.dir/src/minichess.cpp.obj.d -o CMakeFiles/template_project.elf.dir/src/minichess.cpp.obj -c /home/unclegoga/Development/PM/proiect/src/minichess.cpp
 
 CMakeFiles/template_project.elf.dir/src/minichess.cpp.i: cmake_force
@@ -170,7 +184,7 @@ CMakeFiles/template_project.elf.dir/src/minichess.cpp.s: cmake_force
 CMakeFiles/template_project.elf.dir/src/text_renderer.cpp.obj: CMakeFiles/template_project.elf.dir/flags.make
 CMakeFiles/template_project.elf.dir/src/text_renderer.cpp.obj: ../src/text_renderer.cpp
 CMakeFiles/template_project.elf.dir/src/text_renderer.cpp.obj: CMakeFiles/template_project.elf.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/unclegoga/Development/PM/proiect/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/template_project.elf.dir/src/text_renderer.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/unclegoga/Development/PM/proiect/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/template_project.elf.dir/src/text_renderer.cpp.obj"
 	avr-g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/template_project.elf.dir/src/text_renderer.cpp.obj -MF CMakeFiles/template_project.elf.dir/src/text_renderer.cpp.obj.d -o CMakeFiles/template_project.elf.dir/src/text_renderer.cpp.obj -c /home/unclegoga/Development/PM/proiect/src/text_renderer.cpp
 
 CMakeFiles/template_project.elf.dir/src/text_renderer.cpp.i: cmake_force
@@ -184,7 +198,7 @@ CMakeFiles/template_project.elf.dir/src/text_renderer.cpp.s: cmake_force
 CMakeFiles/template_project.elf.dir/src/uart.cpp.obj: CMakeFiles/template_project.elf.dir/flags.make
 CMakeFiles/template_project.elf.dir/src/uart.cpp.obj: ../src/uart.cpp
 CMakeFiles/template_project.elf.dir/src/uart.cpp.obj: CMakeFiles/template_project.elf.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/unclegoga/Development/PM/proiect/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/template_project.elf.dir/src/uart.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/unclegoga/Development/PM/proiect/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/template_project.elf.dir/src/uart.cpp.obj"
 	avr-g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/template_project.elf.dir/src/uart.cpp.obj -MF CMakeFiles/template_project.elf.dir/src/uart.cpp.obj.d -o CMakeFiles/template_project.elf.dir/src/uart.cpp.obj -c /home/unclegoga/Development/PM/proiect/src/uart.cpp
 
 CMakeFiles/template_project.elf.dir/src/uart.cpp.i: cmake_force
@@ -203,6 +217,7 @@ template_project_elf_OBJECTS = \
 "CMakeFiles/template_project.elf.dir/src/display.cpp.obj" \
 "CMakeFiles/template_project.elf.dir/src/i2c.cpp.obj" \
 "CMakeFiles/template_project.elf.dir/src/main.cpp.obj" \
+"CMakeFiles/template_project.elf.dir/src/millis.cpp.obj" \
 "CMakeFiles/template_project.elf.dir/src/minichess.cpp.obj" \
 "CMakeFiles/template_project.elf.dir/src/text_renderer.cpp.obj" \
 "CMakeFiles/template_project.elf.dir/src/uart.cpp.obj"
@@ -216,12 +231,13 @@ template_project.elf: CMakeFiles/template_project.elf.dir/src/chess_board.cpp.ob
 template_project.elf: CMakeFiles/template_project.elf.dir/src/display.cpp.obj
 template_project.elf: CMakeFiles/template_project.elf.dir/src/i2c.cpp.obj
 template_project.elf: CMakeFiles/template_project.elf.dir/src/main.cpp.obj
+template_project.elf: CMakeFiles/template_project.elf.dir/src/millis.cpp.obj
 template_project.elf: CMakeFiles/template_project.elf.dir/src/minichess.cpp.obj
 template_project.elf: CMakeFiles/template_project.elf.dir/src/text_renderer.cpp.obj
 template_project.elf: CMakeFiles/template_project.elf.dir/src/uart.cpp.obj
 template_project.elf: CMakeFiles/template_project.elf.dir/build.make
 template_project.elf: CMakeFiles/template_project.elf.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/unclegoga/Development/PM/proiect/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Linking CXX executable template_project.elf"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/unclegoga/Development/PM/proiect/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Linking CXX executable template_project.elf"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/template_project.elf.dir/link.txt --verbose=$(VERBOSE)
 	avr-objcopy -j .text -j .data -O ihex template_project.elf template_project.hex
 	avr-objcopy -j .text -j .data -O binary template_project.elf template_project.bin

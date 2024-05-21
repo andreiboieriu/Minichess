@@ -26,19 +26,8 @@ public:
     void drawPixel(uint8_t x, uint8_t y, uint8_t color) {
         if (!color) {
             mBuffer[x + (y / 8) * mWidth] &= ~(1 << (y % 8));
-            // mBuffer[100 + (30 / 8) * mWidth] |= (1 << (30 % 8));
-
         } else {
             mBuffer[x + (y / 8) * mWidth] |= (1 << (y % 8));
-            // mBuffer[100 + (35 / 8) * mWidth] |= (1 << (35 % 8));
-        }
-    }
-
-    void awala() {
-        for (uint16_t i = 0; i < 1024; i++) {
-            if (mBuffer[i] != 255) {
-                mUart.puts("sugpulaaa\r\n");
-            }
         }
     }
 

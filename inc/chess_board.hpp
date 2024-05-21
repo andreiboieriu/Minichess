@@ -32,6 +32,7 @@ public:
     void init();
     void reset();
     void drawBoard();
+    void drawSelection(uint8_t row, uint8_t col, Color color);
 
     void selectPiece() {
 
@@ -49,6 +50,7 @@ private:
     void drawPiece(uint8_t row, uint8_t col, Piece piece);
 
     void drawValues(uint8_t row, uint8_t col, uint8_t values[16][2], bool inverted = false);
+
 
     Color getSquareColor(uint8_t row, uint8_t col);
 

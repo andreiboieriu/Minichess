@@ -12,8 +12,10 @@ CMakeFiles/template_project.elf.dir/src/minichess.cpp.obj: \
  /usr/lib/avr/include/avr/version.h /usr/lib/avr/include/avr/fuse.h \
  /usr/lib/avr/include/avr/lock.h \
  /home/unclegoga/Development/PM/proiect/inc/button_manager.hpp \
- /home/unclegoga/Development/PM/proiect/inc/chess_board.hpp \
+ /home/unclegoga/Development/PM/proiect/inc/text_renderer.hpp \
  /home/unclegoga/Development/PM/proiect/inc/display.hpp \
  /usr/lib/avr/include/string.h /usr/lib/gcc/avr/5.4.0/include/stddef.h \
- /usr/lib/avr/include/util/delay.h \
+ /home/unclegoga/Development/PM/proiect/inc/chess_board.hpp \
+ /home/unclegoga/Development/PM/proiect/inc/millis.hpp \
+ /usr/lib/avr/include/avr/interrupt.h /usr/lib/avr/include/util/delay.h \
  /usr/lib/avr/include/util/delay_basic.h /usr/lib/avr/include/math.h

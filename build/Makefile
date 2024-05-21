@@ -286,6 +286,30 @@ src/main.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/template_project.elf.dir/build.make CMakeFiles/template_project.elf.dir/src/main.cpp.s
 .PHONY : src/main.cpp.s
 
+src/millis.obj: src/millis.cpp.obj
+.PHONY : src/millis.obj
+
+# target to build an object file
+src/millis.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/template_project.elf.dir/build.make CMakeFiles/template_project.elf.dir/src/millis.cpp.obj
+.PHONY : src/millis.cpp.obj
+
+src/millis.i: src/millis.cpp.i
+.PHONY : src/millis.i
+
+# target to preprocess a source file
+src/millis.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/template_project.elf.dir/build.make CMakeFiles/template_project.elf.dir/src/millis.cpp.i
+.PHONY : src/millis.cpp.i
+
+src/millis.s: src/millis.cpp.s
+.PHONY : src/millis.s
+
+# target to generate assembly for a file
+src/millis.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/template_project.elf.dir/build.make CMakeFiles/template_project.elf.dir/src/millis.cpp.s
+.PHONY : src/millis.cpp.s
+
 src/minichess.obj: src/minichess.cpp.obj
 .PHONY : src/minichess.obj
 
@@ -386,6 +410,9 @@ help:
 	@echo "... src/main.obj"
 	@echo "... src/main.i"
 	@echo "... src/main.s"
+	@echo "... src/millis.obj"
+	@echo "... src/millis.i"
+	@echo "... src/millis.s"
 	@echo "... src/minichess.obj"
 	@echo "... src/minichess.i"
 	@echo "... src/minichess.s"

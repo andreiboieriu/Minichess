@@ -6,7 +6,6 @@ ChessBoard::ChessBoard(Display &display) : mDisplay(display) {
 
 void ChessBoard::init() {
     reset();
-    drawBoard();
 }
 
 void ChessBoard::reset() {
@@ -364,4 +363,30 @@ Color ChessBoard::getSquareColor(uint8_t row, uint8_t col) {
     }
 
     return color ? Color::WHITE : Color::BLACK;
+}
+
+void ChessBoard::drawSelection(uint8_t row, uint8_t col, Color color) {
+    for (uint8_t i = 4; i < 12; i++) {
+        for (uint8_t j = 4; j < 12; j++) {
+            if ((i == 4 && j < 6) || (i == 4 && j > 10))
+                continue;
+
+            if ((i == 5 && j < 5) || (i == 5 && j > 11))
+                continue;
+
+            if ((i == 10 && j < 5) || (i == 10 && j > 11))
+                continue;
+
+            if ((i == 11 && j < 6) || (i == 11 && j > 10))
+                continue;
+            
+            mDisplay.drawPixel(col * 16 + i, row * 16 + j, color == Color::BLACK ? 0 : 1);
+        }
+    }
+
+    // for (int i = 9; i < 10; i++) {
+    //     for (int j = 8; j < 12; j++) {
+    //         mDisplay.drawPixel(row * 16 + i, col * 16 + j, color == Color::BLACK ? 0 : 1);
+    //     }
+    // }
 }

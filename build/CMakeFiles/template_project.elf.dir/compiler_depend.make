@@ -92,7 +92,29 @@ CMakeFiles/template_project.elf.dir/src/main.cpp.obj: ../src/main.cpp \
   /usr/lib/avr/include/avr/common.h \
   /usr/lib/avr/include/avr/version.h \
   /usr/lib/avr/include/avr/fuse.h \
-  /usr/lib/avr/include/avr/lock.h
+  /usr/lib/avr/include/avr/lock.h \
+  ../inc/button_manager.hpp \
+  ../inc/text_renderer.hpp \
+  ../inc/display.hpp \
+  /usr/lib/avr/include/string.h \
+  /usr/lib/gcc/avr/5.4.0/include/stddef.h \
+  ../inc/chess_board.hpp
+
+CMakeFiles/template_project.elf.dir/src/millis.cpp.obj: ../src/millis.cpp \
+  /usr/lib/avr/include/avr/io.h \
+  /usr/lib/avr/include/avr/sfr_defs.h \
+  /usr/lib/avr/include/inttypes.h \
+  /usr/lib/gcc/avr/5.4.0/include/stdint.h \
+  /usr/lib/avr/include/stdint.h \
+  /usr/lib/avr/include/avr/iom328p.h \
+  /usr/lib/avr/include/avr/portpins.h \
+  /usr/lib/avr/include/avr/common.h \
+  /usr/lib/avr/include/avr/version.h \
+  /usr/lib/avr/include/avr/fuse.h \
+  /usr/lib/avr/include/avr/lock.h \
+  /usr/lib/avr/include/util/atomic.h \
+  /usr/lib/avr/include/avr/interrupt.h \
+  ../inc/millis.hpp
 
 CMakeFiles/template_project.elf.dir/src/minichess.cpp.obj: ../src/minichess.cpp \
   ../inc/minichess.hpp \
@@ -112,15 +134,36 @@ CMakeFiles/template_project.elf.dir/src/minichess.cpp.obj: ../src/minichess.cpp 
   /usr/lib/avr/include/avr/fuse.h \
   /usr/lib/avr/include/avr/lock.h \
   ../inc/button_manager.hpp \
-  ../inc/chess_board.hpp \
+  ../inc/text_renderer.hpp \
   ../inc/display.hpp \
   /usr/lib/avr/include/string.h \
   /usr/lib/gcc/avr/5.4.0/include/stddef.h \
+  ../inc/chess_board.hpp \
+  ../inc/millis.hpp \
+  /usr/lib/avr/include/avr/interrupt.h \
   /usr/lib/avr/include/util/delay.h \
   /usr/lib/avr/include/util/delay_basic.h \
   /usr/lib/avr/include/math.h
 
-CMakeFiles/template_project.elf.dir/src/text_renderer.cpp.obj: ../src/text_renderer.cpp
+CMakeFiles/template_project.elf.dir/src/text_renderer.cpp.obj: ../src/text_renderer.cpp \
+  ../inc/text_renderer.hpp \
+  ../inc/display.hpp \
+  ../inc/i2c.hpp \
+  /usr/lib/avr/include/util/twi.h \
+  /usr/lib/avr/include/avr/io.h \
+  /usr/lib/avr/include/avr/sfr_defs.h \
+  /usr/lib/avr/include/inttypes.h \
+  /usr/lib/gcc/avr/5.4.0/include/stdint.h \
+  /usr/lib/avr/include/stdint.h \
+  /usr/lib/avr/include/avr/iom328p.h \
+  /usr/lib/avr/include/avr/portpins.h \
+  /usr/lib/avr/include/avr/common.h \
+  /usr/lib/avr/include/avr/version.h \
+  /usr/lib/avr/include/avr/fuse.h \
+  /usr/lib/avr/include/avr/lock.h \
+  ../inc/uart.hpp \
+  /usr/lib/avr/include/string.h \
+  /usr/lib/gcc/avr/5.4.0/include/stddef.h
 
 CMakeFiles/template_project.elf.dir/src/uart.cpp.obj: ../src/uart.cpp \
   ../inc/uart.hpp \
@@ -143,6 +186,10 @@ CMakeFiles/template_project.elf.dir/src/uart.cpp.obj: ../src/uart.cpp \
 
 /usr/lib/avr/include/util/delay_basic.h:
 
+../inc/millis.hpp:
+
+/usr/lib/avr/include/util/atomic.h:
+
 /usr/lib/avr/include/avr/lock.h:
 
 /usr/lib/avr/include/avr/fuse.h:
@@ -161,6 +208,14 @@ CMakeFiles/template_project.elf.dir/src/uart.cpp.obj: ../src/uart.cpp \
 
 ../src/display.cpp:
 
+../src/uart.cpp:
+
+/usr/lib/avr/include/util/delay.h:
+
+/usr/lib/avr/include/inttypes.h:
+
+/usr/lib/avr/include/stdint.h:
+
 ../src/adc.cpp:
 
 ../inc/uart.hpp:
@@ -173,31 +228,29 @@ CMakeFiles/template_project.elf.dir/src/uart.cpp.obj: ../src/uart.cpp \
 
 /usr/lib/avr/include/avr/sfr_defs.h:
 
-../src/uart.cpp:
-
-/usr/lib/avr/include/inttypes.h:
-
-/usr/lib/avr/include/stdint.h:
-
-/usr/lib/avr/include/util/delay.h:
-
 ../inc/adc.hpp:
 
 ../src/button_manager.cpp:
+
+/usr/lib/avr/include/avr/interrupt.h:
+
+../inc/chess_board.hpp:
+
+../inc/i2c.hpp:
 
 ../src/minichess.cpp:
 
 ../src/chess_board.cpp:
 
-../inc/chess_board.hpp:
-
-../inc/i2c.hpp:
+../inc/text_renderer.hpp:
 
 /usr/lib/avr/include/util/twi.h:
 
 /usr/lib/avr/include/string.h:
 
 /usr/lib/gcc/avr/5.4.0/include/stddef.h:
+
+../src/millis.cpp:
 
 ../src/i2c.cpp:
 

@@ -13,6 +13,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/template_project.elf.dir/src/i2c.cpp.obj.d"
   "CMakeFiles/template_project.elf.dir/src/main.cpp.obj"
   "CMakeFiles/template_project.elf.dir/src/main.cpp.obj.d"
+  "CMakeFiles/template_project.elf.dir/src/millis.cpp.obj"
+  "CMakeFiles/template_project.elf.dir/src/millis.cpp.obj.d"
   "CMakeFiles/template_project.elf.dir/src/minichess.cpp.obj"
   "CMakeFiles/template_project.elf.dir/src/minichess.cpp.obj.d"
   "CMakeFiles/template_project.elf.dir/src/text_renderer.cpp.obj"
