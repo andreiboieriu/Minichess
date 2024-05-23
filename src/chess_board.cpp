@@ -368,25 +368,679 @@ Color ChessBoard::getSquareColor(uint8_t row, uint8_t col) {
 void ChessBoard::drawSelection(uint8_t row, uint8_t col, Color color) {
     for (uint8_t i = 4; i < 12; i++) {
         for (uint8_t j = 4; j < 12; j++) {
-            if ((i == 4 && j < 6) || (i == 4 && j > 10))
+            if ((i == 4 && j < 6) || (i == 4 && j > 9))
                 continue;
 
-            if ((i == 5 && j < 5) || (i == 5 && j > 11))
+            if ((i == 5 && j < 5) || (i == 5 && j > 10))
                 continue;
 
-            if ((i == 10 && j < 5) || (i == 10 && j > 11))
+            if ((i == 10 && j < 5) || (i == 10 && j > 10))
                 continue;
 
-            if ((i == 11 && j < 6) || (i == 11 && j > 10))
+            if ((i == 11 && j < 6) || (i == 11 && j > 9))
                 continue;
-            
+
             mDisplay.drawPixel(col * 16 + i, row * 16 + j, color == Color::BLACK ? 0 : 1);
         }
     }
+}
 
-    // for (int i = 9; i < 10; i++) {
-    //     for (int j = 8; j < 12; j++) {
-    //         mDisplay.drawPixel(row * 16 + i, col * 16 + j, color == Color::BLACK ? 0 : 1);
-    //     }
-    // }
+Color ChessBoard::getSquareDominantColor(uint8_t row, uint8_t col) {
+    Piece piece = mBoard[row][col];
+
+    if (piece == Piece::EMPTY) {
+        return getSquareColor(row, col);
+    }
+
+    return getPieceColor(piece);
+}
+
+Color ChessBoard::getPieceColor(Piece piece) {
+    return (piece == Piece::WHITE_BISHOP ||
+            piece == Piece::WHITE_KING ||
+            piece == Piece::WHITE_PAWN ||
+            piece == Piece::WHITE_ROOK ||
+            piece == Piece::WHITE_KNIGHT) ? Color::WHITE : Color::BLACK;
+}
+
+void ChessBoard::movePieceSelection(Color playerColor, Button input, int8_t selectionPos[]) {
+    // get direction based on input
+    int8_t direction[2] = {0, 0};
+
+    switch (input) {
+        case Button::RIGHT:
+            direction[0] = 0;
+            direction[1] = 1;
+
+            break;
+
+        case Button::LEFT:
+            direction[0] = 0;
+            direction[1] = -1;
+
+            break;
+
+        case Button::UP:
+            direction[0] = -1;
+            direction[1] = 0;
+
+            break;
+
+        case Button::DOWN:
+            direction[0] = 1;
+            direction[1] = 0;
+
+            break;
+
+        default:
+            return;
+    }
+
+    int8_t currPos[2];
+    currPos[0] = selectionPos[0];
+    currPos[1] = selectionPos[1];
+
+    do {
+        currPos[0] += direction[0];
+        currPos[1] += direction[1];
+
+        if (currPos[1] < 0) {
+            currPos[1] = 4;
+            currPos[0] -= 1;
+
+            if (currPos[0] < 0) {
+                currPos[0] = 3;
+            }
+        } else if (currPos[1] >= 5) {
+            currPos[1] = 0;
+            currPos[0] += 1;
+
+            if (currPos[0] >= 4) {
+                currPos[0] = 0;
+            }
+
+        } else if (currPos[0] < 0) {
+            currPos[0] = 3;
+            currPos[1] -= 1;
+
+            if (currPos[1] < 0) {
+                currPos[1] = 4;
+            }
+        } else if (currPos[0] >= 4) {
+            currPos[0] = 0;
+            currPos[1] += 1;
+
+            if (currPos[1] >= 5) {
+                currPos[1] = 0;
+            }
+        }
+
+        Piece piece = mBoard[currPos[0]][currPos[1]];
+
+        if (piece != Piece::EMPTY && getPieceColor(piece) == playerColor) {
+            break;
+        }
+
+    } while (!(currPos[0] == selectionPos[0] && currPos[1] == selectionPos[1]));
+
+    selectionPos[0] = currPos[0];
+    selectionPos[1] = currPos[1];
+}
+
+void ChessBoard::moveMoveSelection(Button input, int8_t selectionPos[]) {
+    // get direction based on input
+    int8_t direction[2] = {0, 0};
+
+    switch (input) {
+        case Button::RIGHT:
+            direction[0] = 0;
+            direction[1] = 1;
+
+            break;
+
+        case Button::LEFT:
+            direction[0] = 0;
+            direction[1] = -1;
+
+            break;
+
+        case Button::UP:
+            direction[0] = -1;
+            direction[1] = 0;
+
+            break;
+
+        case Button::DOWN:
+            direction[0] = 1;
+            direction[1] = 0;
+
+            break;
+
+        default:
+            return;
+    }
+
+    int8_t currPos[2];
+    currPos[0] = selectionPos[0];
+    currPos[1] = selectionPos[1];
+
+    do {
+        currPos[0] += direction[0];
+        currPos[1] += direction[1];
+
+        if (currPos[1] < 0) {
+            currPos[1] = 4;
+            currPos[0] -= 1;
+
+            if (currPos[0] < 0) {
+                currPos[0] = 3;
+            }
+        } else if (currPos[1] >= 5) {
+            currPos[1] = 0;
+            currPos[0] += 1;
+
+            if (currPos[0] >= 4) {
+                currPos[0] = 0;
+            }
+
+        } else if (currPos[0] < 0) {
+            currPos[0] = 3;
+            currPos[1] -= 1;
+
+            if (currPos[1] < 0) {
+                currPos[1] = 4;
+            }
+        } else if (currPos[0] >= 4) {
+            currPos[0] = 0;
+            currPos[1] += 1;
+
+            if (currPos[1] >= 5) {
+                currPos[1] = 0;
+            }
+        }
+
+        if (mMoves[currPos[0]][currPos[1]]) {
+            break;
+        }
+
+    } while (!(currPos[0] == selectionPos[0] && currPos[1] == selectionPos[1]));
+
+    selectionPos[0] = currPos[0];
+    selectionPos[1] = currPos[1];
+}
+
+void ChessBoard::getPossibleMoves() {
+    // clear moves matrix
+    for (uint8_t row = 0; row < 4; row++) {
+        for (uint8_t col = 0; col < 5; col++) {
+            mMoves[row][col] = 0;
+        }
+    }
+
+    // get piece
+    Piece piece = mBoard[mSelectedPiecePos[0]][mSelectedPiecePos[1]];
+    Color pieceColor = getPieceColor(piece);
+
+    if (piece == Piece::BLACK_PAWN || piece == Piece::WHITE_PAWN) {
+        getPawnMoves(mSelectedPiecePos, pieceColor);
+    } else if (piece == Piece::BLACK_BISHOP || piece == Piece::WHITE_BISHOP) {
+        getBishopMoves(mSelectedPiecePos, pieceColor);
+    } else if (piece == Piece::BLACK_KNIGHT || piece == Piece::WHITE_KNIGHT) {
+        getKnightMoves(mSelectedPiecePos, pieceColor);
+    } else if (piece == Piece::BLACK_ROOK || piece == Piece::WHITE_ROOK) {
+        getRookMoves(mSelectedPiecePos, pieceColor);
+    } else if (piece == Piece::BLACK_KING || piece == Piece::WHITE_KING) {
+        getKingMoves(mSelectedPiecePos, pieceColor);
+    }
+}
+
+void ChessBoard::getPawnMoves(int8_t piecePos[], Color color) {
+    // check if pawn can move 2 squares
+    if (color == Color::WHITE && !mWhitePawnMoved && mBoard[piecePos[0]][piecePos[1] + 1] == Piece::EMPTY) {
+        Piece piece = mBoard[piecePos[0]][piecePos[1] + 2];
+
+        if (piece == Piece::EMPTY) {
+            mMoves[piecePos[0]][piecePos[1] + 2] = 1;
+        }
+    }
+
+    if (color == Color::BLACK && !mBlackPawnMoved && mBoard[piecePos[0]][piecePos[1] - 1] == Piece::EMPTY) {
+        Piece piece = mBoard[piecePos[0]][piecePos[1] - 2];
+
+        if (piece == Piece::EMPTY) {
+            mMoves[piecePos[0]][piecePos[1] - 2] = 1;
+        }
+    }
+
+    // check if pawn can move 1 square
+    if (color == Color::WHITE && piecePos[1] + 1 < 5 && mBoard[piecePos[0]][piecePos[1] + 1] == Piece::EMPTY) {
+        mMoves[piecePos[0]][piecePos[1] + 1] = 1;
+    }
+
+    // check if pawn can attack
+    if (color == Color::WHITE && piecePos[1] + 1 < 5 && piecePos[0] - 1 >= 0) {
+        Piece piece = mBoard[piecePos[0] - 1][piecePos[1] + 1];
+
+        if (piece != Piece::EMPTY && getPieceColor(piece) != color && piece != Piece::WHITE_KING && piece != Piece::BLACK_KING) {
+            mMoves[piecePos[0] - 1][piecePos[1] + 1] = 1;
+        }
+    }
+
+    if (color == Color::WHITE && piecePos[1] + 1 < 5 && piecePos[0] + 1 < 4) {
+        Piece piece = mBoard[piecePos[0] + 1][piecePos[1] + 1];
+
+        if (piece != Piece::EMPTY && getPieceColor(piece) != color && piece != Piece::WHITE_KING && piece != Piece::BLACK_KING) {
+            mMoves[piecePos[0] + 1][piecePos[1] + 1] = 1;
+        }
+    }
+
+    // check if pawn can move 1 square
+    if (color == Color::BLACK && piecePos[1] - 1 >= 0 && mBoard[piecePos[0]][piecePos[1] - 1] == Piece::EMPTY) {
+        mMoves[piecePos[0]][piecePos[1] - 1] = 1;
+    }
+
+    // check if pawn can attack
+    if (color == Color::BLACK && piecePos[1] - 1 >= 0 && piecePos[0] - 1 >= 0) {
+        Piece piece = mBoard[piecePos[0] - 1][piecePos[1] - 1];
+
+        if (piece != Piece::EMPTY && getPieceColor(piece) != color && piece != Piece::WHITE_KING && piece != Piece::BLACK_KING) {
+            mMoves[piecePos[0] - 1][piecePos[1] - 1] = 1;
+        }
+    }
+
+    if (color == Color::BLACK && piecePos[1] - 1 >= 0 && piecePos[0] + 1 < 4) {
+        Piece piece = mBoard[piecePos[0] + 1][piecePos[1] - 1];
+
+        if (piece != Piece::EMPTY && getPieceColor(piece) != color && piece != Piece::WHITE_KING && piece != Piece::BLACK_KING) {
+            mMoves[piecePos[0] + 1][piecePos[1] - 1] = 1;
+        }
+    }
+}
+
+void ChessBoard::drawMoves() {
+    for (uint8_t row = 0; row < 4; row++) {
+        for (uint8_t col = 0; col < 5; col++) {
+            if (!mMoves[row][col]) {
+                continue;
+            }
+
+            // get indicator color
+            Color color = getSquareDominantColor(row, col);
+
+            if (color == Color::BLACK) {
+                color = Color::WHITE;
+            } else {
+                color = Color::BLACK;
+            }
+
+            // draw indicator
+            drawMoveIndicator(row, col, color);
+        }
+    }
+}
+
+void ChessBoard::selectPiece(int8_t piecePos[], int8_t moveSelectionPos[]) {
+    mSelectedPiecePos[0] = piecePos[0];
+    mSelectedPiecePos[1] = piecePos[1];
+
+    getPossibleMoves();
+    validateMoves();
+
+    for (uint8_t row = 0; row < 4; row++) {
+        for (uint8_t col = 0; col < 5; col++) {
+            if (mMoves[row][col]) {
+                moveSelectionPos[0] = row;
+                moveSelectionPos[1] = col;
+                break;
+            }
+        }
+    }
+}
+
+void ChessBoard::drawMoveIndicator(uint8_t row, uint8_t col, Color color) {
+    mDisplay.drawPixel(col * 16 + 4, row * 16 + 6, color == Color::BLACK ? 0 : 1);
+    mDisplay.drawPixel(col * 16 + 4, row * 16 + 7, color == Color::BLACK ? 0 : 1);
+    mDisplay.drawPixel(col * 16 + 4, row * 16 + 8, color == Color::BLACK ? 0 : 1);
+    mDisplay.drawPixel(col * 16 + 4, row * 16 + 9, color == Color::BLACK ? 0 : 1);
+
+    mDisplay.drawPixel(col * 16 + 5, row * 16 + 5, color == Color::BLACK ? 0 : 1);
+    mDisplay.drawPixel(col * 16 + 5, row * 16 + 6, color == Color::BLACK ? 0 : 1);
+    mDisplay.drawPixel(col * 16 + 5, row * 16 + 9, color == Color::BLACK ? 0 : 1);
+    mDisplay.drawPixel(col * 16 + 5, row * 16 + 10, color == Color::BLACK ? 0 : 1);
+
+    mDisplay.drawPixel(col * 16 + 6, row * 16 + 4, color == Color::BLACK ? 0 : 1);
+    mDisplay.drawPixel(col * 16 + 6, row * 16 + 5, color == Color::BLACK ? 0 : 1);
+    mDisplay.drawPixel(col * 16 + 6, row * 16 + 10, color == Color::BLACK ? 0 : 1);
+    mDisplay.drawPixel(col * 16 + 6, row * 16 + 11, color == Color::BLACK ? 0 : 1);
+
+    mDisplay.drawPixel(col * 16 + 7, row * 16 + 4, color == Color::BLACK ? 0 : 1);
+    mDisplay.drawPixel(col * 16 + 7, row * 16 + 11, color == Color::BLACK ? 0 : 1);
+
+    mDisplay.drawPixel(col * 16 + 8, row * 16 + 4, color == Color::BLACK ? 0 : 1);
+    mDisplay.drawPixel(col * 16 + 8, row * 16 + 11, color == Color::BLACK ? 0 : 1);
+
+    mDisplay.drawPixel(col * 16 + 11, row * 16 + 9, color == Color::BLACK ? 0 : 1);
+    mDisplay.drawPixel(col * 16 + 11, row * 16 + 8, color == Color::BLACK ? 0 : 1);
+    mDisplay.drawPixel(col * 16 + 11, row * 16 + 7, color == Color::BLACK ? 0 : 1);
+    mDisplay.drawPixel(col * 16 + 11, row * 16 + 6, color == Color::BLACK ? 0 : 1);
+
+    mDisplay.drawPixel(col * 16 + 10, row * 16 + 5, color == Color::BLACK ? 0 : 1);
+    mDisplay.drawPixel(col * 16 + 10, row * 16 + 6, color == Color::BLACK ? 0 : 1);
+    mDisplay.drawPixel(col * 16 + 10, row * 16 + 9, color == Color::BLACK ? 0 : 1);
+    mDisplay.drawPixel(col * 16 + 10, row * 16 + 10, color == Color::BLACK ? 0 : 1);
+
+    mDisplay.drawPixel(col * 16 + 9, row * 16 + 4, color == Color::BLACK ? 0 : 1);
+    mDisplay.drawPixel(col * 16 + 9, row * 16 + 5, color == Color::BLACK ? 0 : 1);
+    mDisplay.drawPixel(col * 16 + 9, row * 16 + 10, color == Color::BLACK ? 0 : 1);
+    mDisplay.drawPixel(col * 16 + 9, row * 16 + 11, color == Color::BLACK ? 0 : 1);
+}
+
+void ChessBoard::getBishopMoves(int8_t piecePos[], Color color) {
+    int8_t directions[4][2] = {
+        {-1, -1},
+        {-1, 1},
+        {1, -1},
+        {1, 1}
+    };
+
+    for (uint8_t i = 0; i < 4; i++) {
+        int8_t currPos[2];
+        currPos[0] = piecePos[0] + directions[i][0];
+        currPos[1] = piecePos[1] + directions[i][1];
+
+        while (!(currPos[0] < 0 || currPos[0] >= 4 || currPos[1] < 0 || currPos[1] >= 5)) {
+            Piece piece = mBoard[currPos[0]][currPos[1]];
+
+            if (piece != Piece::EMPTY) {
+                if (getPieceColor(piece) != color && piece != Piece::WHITE_KING && piece != Piece::BLACK_KING) {
+                    mMoves[currPos[0]][currPos[1]] = 1;
+                }
+
+                break;
+            }
+
+            mMoves[currPos[0]][currPos[1]] = 1;
+
+            currPos[0] += directions[i][0];
+            currPos[1] += directions[i][1];
+        }
+    }
+}
+
+void ChessBoard::getKnightMoves(int8_t piecePos[], Color color) {
+    int8_t directions[8][2] = {
+        {-2, -1},
+        {-2, 1},
+        {-1, -2},
+        {-1, 2},
+        {1, -2},
+        {1, 2},
+        {2, -1},
+        {2, 1}
+    };
+
+    for (uint8_t i = 0; i < 8; i++) {
+        int8_t currPos[2];
+        currPos[0] = piecePos[0] + directions[i][0];
+        currPos[1] = piecePos[1] + directions[i][1];
+
+        // check if position is out of bounds
+        if (currPos[0] < 0 || currPos[0] >= 4 || currPos[1] < 0 || currPos[1] >= 5) {
+            continue;
+        }
+
+        Piece piece = mBoard[currPos[0]][currPos[1]];
+
+        if (piece == Piece::EMPTY || (getPieceColor(piece) != color && piece != Piece::WHITE_KING && piece != Piece::BLACK_KING)) {
+            mMoves[currPos[0]][currPos[1]] = 1;
+        }
+    }
+}
+
+void ChessBoard::getRookMoves(int8_t piecePos[], Color color) {
+    int8_t directions[4][2] = {
+        {-1, 0},
+        {1, 0},
+        {0, -1},
+        {0, 1}
+    };
+
+    for (uint8_t i = 0; i < 4; i++) {
+        int8_t currPos[2];
+        currPos[0] = piecePos[0] + directions[i][0];
+        currPos[1] = piecePos[1] + directions[i][1];
+
+        while (!(currPos[0] < 0 || currPos[0] >= 4 || currPos[1] < 0 || currPos[1] >= 5)) {
+            Piece piece = mBoard[currPos[0]][currPos[1]];
+
+            if (piece != Piece::EMPTY) {
+                if (getPieceColor(piece) != color && piece != Piece::WHITE_KING && piece != Piece::BLACK_KING) {
+                    mMoves[currPos[0]][currPos[1]] = 1;
+                }
+
+                break;
+            }
+
+            mMoves[currPos[0]][currPos[1]] = 1;
+
+            currPos[0] += directions[i][0];
+            currPos[1] += directions[i][1];
+        }
+    }
+}
+
+void ChessBoard::getKingMoves(int8_t piecePos[], Color color) {
+    int8_t directions[8][2] = {
+        {-1, 0},
+        {-1, 1},
+        {-1, -1},
+        {0, -1},
+        {0, 1},
+        {1, 1},
+        {1, -1},
+        {1, 0}
+    };
+
+    for (uint8_t i = 0; i < 8; i++) {
+        int8_t currPos[2];
+        currPos[0] = piecePos[0] + directions[i][0];
+        currPos[1] = piecePos[1] + directions[i][1];
+
+        if (!(currPos[0] < 0 || currPos[0] >= 4 || currPos[1] < 0 || currPos[1] >= 5)) {
+            Piece piece = mBoard[currPos[0]][currPos[1]];
+
+            if ((piece != Piece::EMPTY && getPieceColor(piece) != color && piece != Piece::WHITE_KING && piece != Piece::BLACK_KING) || piece == Piece::EMPTY) {
+                mMoves[currPos[0]][currPos[1]] = 1;
+            }
+        }
+    }
+}
+
+void ChessBoard::validateMoves() {
+    Piece boardCopy[4][5];
+    Color playerColor = getPieceColor(mBoard[mSelectedPiecePos[0]][mSelectedPiecePos[1]]);
+
+    for (uint8_t i = 0; i < 4; i++) {
+        for (uint8_t j = 0; j < 5; j++) {
+            if (!mMoves[i][j]) {
+                continue;
+            }
+
+            // copy board
+            for (uint8_t row = 0; row < 4; row++) {
+                for (uint8_t col = 0; col < 5; col++) {
+                    boardCopy[row][col] = mBoard[row][col];
+                }
+            }
+
+            // make move
+            boardCopy[i][j] = boardCopy[mSelectedPiecePos[0]][mSelectedPiecePos[1]];
+            boardCopy[mSelectedPiecePos[0]][mSelectedPiecePos[1]] = Piece::EMPTY;
+
+            if (isChecked(playerColor, boardCopy)) {
+                mMoves[i][j] = 0;
+            }
+        }
+    }
+}
+
+bool ChessBoard::isChecked(Color playerColor, Piece board[4][5]) {
+    // find king position
+    int8_t kingPos[2] = {};
+
+    for (uint8_t row = 0; row < 4; row++) {
+        for (uint8_t col = 0; col < 5; col++) {
+            if ((board[row][col] == Piece::WHITE_KING && playerColor == Color::WHITE) ||
+                (board[row][col] == Piece::BLACK_KING && playerColor == Color::BLACK)) {
+                kingPos[0] = row;
+                kingPos[1] = col;
+                break;
+            }
+        }
+    }
+
+    for (uint8_t row = 0; row < 4; row++) {
+        for (uint8_t col = 0; col < 5; col++) {
+            Piece piece = board[row][col];
+
+            if (piece == Piece::EMPTY) {
+                continue;
+            }
+
+            if (getPieceColor(piece) == playerColor) {
+                continue;
+            }
+
+            if (piece == Piece::WHITE_KING || piece == Piece::BLACK_KING) {
+                int8_t distX = row - kingPos[0];
+
+                if (distX < 0) {
+                    distX *= -1;
+                }
+
+                int8_t distY = col - kingPos[1];
+
+                if (distY < 0) {
+                    distY *= -1;
+                }
+
+                if (distX <= 1 && distY <= 1) {
+                    return true;
+                }
+            } else if (piece == Piece::WHITE_BISHOP || piece == Piece::BLACK_BISHOP) {
+                int8_t distX = row - kingPos[0];
+                int8_t distY = col - kingPos[1];
+
+                if (distX != distY && distX != distY * -1) {
+                    continue;
+                }
+
+                int8_t directionX = (distX > 0) ? -1 : 1;
+                int8_t directionY = (distY > 0) ? -1 : 1;
+
+                int8_t posX = row + directionX;
+                int8_t posY = col + directionY;
+
+                bool ok = true;
+
+                while (board[posX][posY] != Piece::WHITE_KING && board[posX][posY] != Piece::BLACK_KING) {
+                    if (board[posX][posY] != Piece::EMPTY) {
+                        ok = false;
+                        break;
+                    }
+
+                    posX += directionX;
+                    posY += directionY;
+                }
+
+                if (ok) {
+                    return true;
+                }
+            } else if (piece == Piece::WHITE_KNIGHT || piece == Piece::BLACK_KNIGHT) {
+                if ((row == kingPos[0] - 2 && col == kingPos[1] - 1) ||
+                    (row == kingPos[0] - 2 && col == kingPos[1] + 1) ||
+                    (row == kingPos[0] - 1 && col == kingPos[1] - 2) ||
+                    (row == kingPos[0] - 1 && col == kingPos[1] + 2) ||
+                    (row == kingPos[0] + 1 && col == kingPos[1] - 2) ||
+                    (row == kingPos[0] + 1 && col == kingPos[1] + 2) ||
+                    (row == kingPos[0] + 2 && col == kingPos[1] - 1) ||
+                    (row == kingPos[0] + 2 && col == kingPos[1] + 1)) {
+                    return true;
+                }
+            } else if (piece == Piece::WHITE_ROOK || piece == Piece::BLACK_ROOK) {
+                if (row == kingPos[0]) {
+                    int8_t direction = (kingPos[1] - col > 0) ? -1 : 1;
+
+                    int8_t posY = kingPos[1] + direction;
+                    bool ok = true;
+
+                    while (board[row][posY] != Piece::WHITE_ROOK && board[row][posY] != Piece::BLACK_ROOK) {
+                        if (board[row][posY] != Piece::EMPTY) {
+                            ok = false;
+                            break;
+                        }
+
+                        posY += direction;
+                    }
+
+                    if (ok) {
+                        return true;
+                    }
+                } else if (col == kingPos[1]) {
+                    int8_t direction = (kingPos[0] - row > 0) ? -1 : 1;
+
+                    int8_t posX = kingPos[0] + direction;
+                    bool ok = true;
+
+                    while (board[posX][col] != Piece::WHITE_ROOK && board[posX][col] != Piece::BLACK_ROOK) {
+                        if (board[posX][col] != Piece::EMPTY) {
+                            ok = false;
+                            break;
+                        }
+
+                        posX += direction;
+                    }
+
+                    if (ok) {
+                        return true;
+                    }
+                }
+            } else if (piece == Piece::WHITE_PAWN) {
+                if (col == kingPos[1] - 1 && (row == kingPos[0] - 1 || row == kingPos[0] + 1)) {
+                    return true;
+                }
+            } else if (piece == Piece::BLACK_PAWN) {
+                if (col == kingPos[1] + 1 && (row == kingPos[0] - 1 || row == kingPos[0] + 1)) {
+                    return true;
+                }
+            }
+        }
+    }
+
+    return false;
+}
+
+void ChessBoard::moveSelectedPiece(int8_t dest[]) {
+    if (mBoard[mSelectedPiecePos[0]][mSelectedPiecePos[1]] == Piece::WHITE_PAWN) {
+        mWhitePawnMoved = true;
+    } else if (mBoard[mSelectedPiecePos[0]][mSelectedPiecePos[1]] == Piece::BLACK_PAWN) {
+        mBlackPawnMoved = true;
+    }
+
+    mBoard[dest[0]][dest[1]] = mBoard[mSelectedPiecePos[0]][mSelectedPiecePos[1]];
+    mBoard[mSelectedPiecePos[0]][mSelectedPiecePos[1]] = Piece::EMPTY;
+}
+
+int8_t ChessBoard::getMoveCount() {
+    int8_t count = 0;
+
+    for (uint8_t i = 0; i < 4; i++) {
+        for (uint8_t j = 0; j < 5; j++) {
+            if (mMoves[i][j]) {
+                count++;
+            }
+        }
+    }
+
+    return count;
 }

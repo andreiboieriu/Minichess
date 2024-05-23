@@ -137,4 +137,3 @@ void TextRenderer::renderString(uint8_t row, uint8_t col, char str[], uint8_t of
         renderLetter(row, col + i, str[i], offset);
     }
 }
-

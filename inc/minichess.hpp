@@ -19,12 +19,14 @@ public:
 private:
     enum class State {
         MAIN_MENU,
-        PLAYING
+        SELECTING_PIECE,
+        SELECTING_MOVE
     };
 
     void init();
     void mainMenu(Button input, TextRenderer &textRenderer, unsigned long elapsedTime);
-    void playing(Button input, ChessBoard &chessBoard, unsigned long elapsedTime);
+    void pieceSelection(Button input, ChessBoard &chessBoard, unsigned long elapsedTime);
+    void moveSelection(Button input, ChessBoard &chessBoard, unsigned long elapsedTime);
 
     State mState;
 
@@ -36,7 +38,20 @@ private:
     unsigned long mLastTime;
 
     bool mRenderStart = true;
-    int16_t mStartFlickerCooldown = 800;
+    const int16_t mFlickerCooldown = 800;
+    int16_t mTimeTilFlicker = mFlickerCooldown;
 
-    bool whiteTurn = true;
+    Color mPieceSelectionColor = Color::BLACK;
+    Color mMoveSelectionColor = Color::BLACK;
+
+    int8_t mPieceSelectionPos[2] = {0, 0};
+    int8_t mMoveSelectionPos[2] = {0, 0};
+
+    bool mCanFlickerSelection = false;
+    bool mCanClick = true;
+
+    const int16_t mClickCooldown = 200;
+    int16_t mTimeTilClick = mClickCooldown;
+
+    Color mPlayerColor = Color::WHITE;
 };

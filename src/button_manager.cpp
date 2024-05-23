@@ -13,7 +13,7 @@ Button ButtonManager::getButtonPress() {
         return Button::RIGHT;
     } else if (value <= 885 && value >= 855) {
         return Button::UP;
-    } else if (value <= 1021 && value >= 1009) {
+    } else if (value <= 1019 && value >= 1009) {
         return Button::DOWN;
     } else if (value <= 965 && value >= 935) {
         return Button::A;

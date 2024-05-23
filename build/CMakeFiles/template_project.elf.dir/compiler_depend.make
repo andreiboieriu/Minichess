@@ -27,6 +27,8 @@ CMakeFiles/template_project.elf.dir/src/chess_board.cpp.obj: ../src/chess_board.
   /usr/lib/avr/include/inttypes.h \
   /usr/lib/gcc/avr/5.4.0/include/stdint.h \
   /usr/lib/avr/include/stdint.h \
+  ../inc/button_manager.hpp \
+  ../inc/adc.hpp \
   ../inc/display.hpp \
   ../inc/i2c.hpp \
   /usr/lib/avr/include/util/twi.h \
