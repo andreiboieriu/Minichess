@@ -24,7 +24,7 @@ private:
     };
 
     void init();
-    void mainMenu(Button input, TextRenderer &textRenderer, unsigned long elapsedTime);
+    void mainMenu(Button input, TextRenderer &textRenderer, unsigned long elapsedTime, ChessBoard &chessBoard);
     void pieceSelection(Button input, ChessBoard &chessBoard, unsigned long elapsedTime);
     void moveSelection(Button input, ChessBoard &chessBoard, unsigned long elapsedTime);
 

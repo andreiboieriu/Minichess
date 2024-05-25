@@ -39,7 +39,7 @@ void Minichess::run() {
 
         switch (mState) {
             case State::MAIN_MENU:
-                mainMenu(input, textRenderer, elapsedTime);
+                mainMenu(input, textRenderer, elapsedTime, chessBoard);
                 break;
 
             case State::SELECTING_PIECE:
@@ -58,7 +58,7 @@ void Minichess::run() {
     }
 }
 
-void Minichess::mainMenu(Button input, TextRenderer &textRenderer, unsigned long elapsedTime) {
+void Minichess::mainMenu(Button input, TextRenderer &textRenderer, unsigned long elapsedTime, ChessBoard &chessBoard) {
     textRenderer.renderString(2, 3, "Minichess", 4);
 
     mTimeTilFlicker -= elapsedTime;
@@ -77,6 +77,16 @@ void Minichess::mainMenu(Button input, TextRenderer &textRenderer, unsigned long
         mTimeTilFlicker = mFlickerCooldown;
         mCanClick = false;
         mTimeTilClick = mClickCooldown;
+
+        chessBoard.selectPlayer(Color::WHITE, mPieceSelectionPos);
+
+        mPieceSelectionColor = chessBoard.getSquareDominantColor(mPieceSelectionPos[0], mPieceSelectionPos[1]);
+
+        if (mPieceSelectionColor == Color::BLACK) {
+            mPieceSelectionColor = Color::WHITE;
+        } else {
+            mPieceSelectionColor = Color::BLACK;
+        }
     }
 }
 
@@ -104,7 +114,7 @@ void Minichess::pieceSelection(Button input, ChessBoard &chessBoard, unsigned lo
         }
     }
 
-    chessBoard.movePieceSelection(mPlayerColor, input, mPieceSelectionPos);
+    chessBoard.movePieceSelection(input, mPieceSelectionPos);
 
     if (input != Button::NONE && input != Button::A && input != Button::B) {
         mPieceSelectionColor = chessBoard.getSquareDominantColor(mPieceSelectionPos[0], mPieceSelectionPos[1]);
@@ -132,6 +142,14 @@ void Minichess::pieceSelection(Button input, ChessBoard &chessBoard, unsigned lo
         mTimeTilClick = mClickCooldown;
 
         chessBoard.selectPiece(mPieceSelectionPos, mMoveSelectionPos);
+
+        mMoveSelectionColor = chessBoard.getSquareDominantColor(mMoveSelectionPos[0], mMoveSelectionPos[1]);
+
+        if (mMoveSelectionColor == Color::BLACK) {
+            mMoveSelectionColor = Color::WHITE;
+        } else {
+            mMoveSelectionColor = Color::BLACK;
+        }
     }
 }
 
@@ -184,6 +202,8 @@ void Minichess::moveSelection(Button input, ChessBoard &chessBoard, unsigned lon
         mTimeTilFlicker = mFlickerCooldown;
         mCanFlickerSelection = false;
 
+        chessBoard.moveSelectedPiece(mMoveSelectionPos);
+
         // change player color
         if (mPlayerColor == Color::BLACK) {
             mPlayerColor = Color::WHITE;
@@ -191,10 +211,19 @@ void Minichess::moveSelection(Button input, ChessBoard &chessBoard, unsigned lon
             mPlayerColor = Color::BLACK;
         }
 
-        // move selection cursor to first piece of the player's color
-        chessBoard.movePieceSelection(mPlayerColor, Button::DOWN, mPieceSelectionPos);
+        uint8_t res = chessBoard.selectPlayer(mPlayerColor, mPieceSelectionPos);
 
-        chessBoard.moveSelectedPiece(mMoveSelectionPos);
+        mPieceSelectionColor = chessBoard.getSquareDominantColor(mPieceSelectionPos[0], mPieceSelectionPos[1]);
+
+        if (mPieceSelectionColor == Color::BLACK) {
+            mPieceSelectionColor = Color::WHITE;
+        } else {
+            mPieceSelectionColor = Color::BLACK;
+        }
+
+        if (!res) {
+            // TODO: checkmate / draw
+        }
     }
 
     // draw indicators for possible moves
@@ -227,7 +256,7 @@ void Minichess::moveSelection(Button input, ChessBoard &chessBoard, unsigned lon
         mCanFlickerSelection = !mCanFlickerSelection;
     }
 
-    if (!mCanFlickerSelection && chessBoard.getMoveCount()) {
+    if (!mCanFlickerSelection) {
         chessBoard.drawSelection(mMoveSelectionPos[0], mMoveSelectionPos[1], mMoveSelectionColor);
     }
 }

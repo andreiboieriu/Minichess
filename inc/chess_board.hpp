@@ -26,8 +26,6 @@ enum class Color {
 class ChessBoard {
 
 public:
-
-
     ChessBoard(Display &display);
 
     void init();
@@ -38,9 +36,10 @@ public:
     void drawMoves();
     int8_t getMoveCount();
     void selectPiece(int8_t piecePos[], int8_t moveSelectionPos[]);
+    uint8_t selectPlayer(Color playerColor, int8_t selectionPos[]);
     void moveSelectedPiece(int8_t dest[]);
 
-    void movePieceSelection(Color playerColor, Button input, int8_t selectionPos[]);
+    void movePieceSelection(Button input, int8_t selectionPos[]);
     void moveMoveSelection(Button input, int8_t selectionPos[]);
 
     Color getSquareDominantColor(uint8_t row, uint8_t col);
@@ -65,8 +64,10 @@ private:
     void getRookMoves(int8_t piecePos[], Color color);
     void getKingMoves(int8_t piecePos[], Color color);
 
-    void validateMoves();
+    uint8_t validateMoves();
     bool isChecked(Color playerColor, Piece board[4][5]);
+
+    uint8_t getPieceIdx(Piece piece);
 
 
     Color getSquareColor(uint8_t row, uint8_t col);
@@ -74,7 +75,8 @@ private:
     Color getPieceColor(Piece piece);
 
     Piece mBoard[4][5];
-    uint8_t mMoves[4][5];
+    uint8_t mMoves[5][4][5];
+    uint8_t mPieces[4][5];
     int8_t mSelectedPiecePos[2];
 
     Display &mDisplay;

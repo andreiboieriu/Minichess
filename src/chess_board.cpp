@@ -403,7 +403,7 @@ Color ChessBoard::getPieceColor(Piece piece) {
             piece == Piece::WHITE_KNIGHT) ? Color::WHITE : Color::BLACK;
 }
 
-void ChessBoard::movePieceSelection(Color playerColor, Button input, int8_t selectionPos[]) {
+void ChessBoard::movePieceSelection(Button input, int8_t selectionPos[]) {
     // get direction based on input
     int8_t direction[2] = {0, 0};
 
@@ -475,9 +475,7 @@ void ChessBoard::movePieceSelection(Color playerColor, Button input, int8_t sele
             }
         }
 
-        Piece piece = mBoard[currPos[0]][currPos[1]];
-
-        if (piece != Piece::EMPTY && getPieceColor(piece) == playerColor) {
+        if (mPieces[currPos[0]][currPos[1]]) {
             break;
         }
 
@@ -491,6 +489,8 @@ void ChessBoard::moveMoveSelection(Button input, int8_t selectionPos[]) {
     // get direction based on input
     int8_t direction[2] = {0, 0};
 
+    uint8_t pieceIdx = getPieceIdx(mBoard[mSelectedPiecePos[0]][mSelectedPiecePos[1]]);
+
     switch (input) {
         case Button::RIGHT:
             direction[0] = 0;
@@ -559,7 +559,7 @@ void ChessBoard::moveMoveSelection(Button input, int8_t selectionPos[]) {
             }
         }
 
-        if (mMoves[currPos[0]][currPos[1]]) {
+        if (mMoves[pieceIdx][currPos[0]][currPos[1]]) {
             break;
         }
 
@@ -570,16 +570,17 @@ void ChessBoard::moveMoveSelection(Button input, int8_t selectionPos[]) {
 }
 
 void ChessBoard::getPossibleMoves() {
+    // get piece
+    Piece piece = mBoard[mSelectedPiecePos[0]][mSelectedPiecePos[1]];
+    uint8_t pieceIdx = getPieceIdx(piece);
+    Color pieceColor = getPieceColor(piece);
+
     // clear moves matrix
     for (uint8_t row = 0; row < 4; row++) {
         for (uint8_t col = 0; col < 5; col++) {
-            mMoves[row][col] = 0;
+            mMoves[pieceIdx][row][col] = 0;
         }
     }
-
-    // get piece
-    Piece piece = mBoard[mSelectedPiecePos[0]][mSelectedPiecePos[1]];
-    Color pieceColor = getPieceColor(piece);
 
     if (piece == Piece::BLACK_PAWN || piece == Piece::WHITE_PAWN) {
         getPawnMoves(mSelectedPiecePos, pieceColor);
@@ -600,7 +601,7 @@ void ChessBoard::getPawnMoves(int8_t piecePos[], Color color) {
         Piece piece = mBoard[piecePos[0]][piecePos[1] + 2];
 
         if (piece == Piece::EMPTY) {
-            mMoves[piecePos[0]][piecePos[1] + 2] = 1;
+            mMoves[0][piecePos[0]][piecePos[1] + 2] = 1;
         }
     }
 
@@ -608,13 +609,13 @@ void ChessBoard::getPawnMoves(int8_t piecePos[], Color color) {
         Piece piece = mBoard[piecePos[0]][piecePos[1] - 2];
 
         if (piece == Piece::EMPTY) {
-            mMoves[piecePos[0]][piecePos[1] - 2] = 1;
+            mMoves[0][piecePos[0]][piecePos[1] - 2] = 1;
         }
     }
 
     // check if pawn can move 1 square
     if (color == Color::WHITE && piecePos[1] + 1 < 5 && mBoard[piecePos[0]][piecePos[1] + 1] == Piece::EMPTY) {
-        mMoves[piecePos[0]][piecePos[1] + 1] = 1;
+        mMoves[0][piecePos[0]][piecePos[1] + 1] = 1;
     }
 
     // check if pawn can attack
@@ -622,7 +623,7 @@ void ChessBoard::getPawnMoves(int8_t piecePos[], Color color) {
         Piece piece = mBoard[piecePos[0] - 1][piecePos[1] + 1];
 
         if (piece != Piece::EMPTY && getPieceColor(piece) != color && piece != Piece::WHITE_KING && piece != Piece::BLACK_KING) {
-            mMoves[piecePos[0] - 1][piecePos[1] + 1] = 1;
+            mMoves[0][piecePos[0] - 1][piecePos[1] + 1] = 1;
         }
     }
 
@@ -630,13 +631,13 @@ void ChessBoard::getPawnMoves(int8_t piecePos[], Color color) {
         Piece piece = mBoard[piecePos[0] + 1][piecePos[1] + 1];
 
         if (piece != Piece::EMPTY && getPieceColor(piece) != color && piece != Piece::WHITE_KING && piece != Piece::BLACK_KING) {
-            mMoves[piecePos[0] + 1][piecePos[1] + 1] = 1;
+            mMoves[0][piecePos[0] + 1][piecePos[1] + 1] = 1;
         }
     }
 
     // check if pawn can move 1 square
     if (color == Color::BLACK && piecePos[1] - 1 >= 0 && mBoard[piecePos[0]][piecePos[1] - 1] == Piece::EMPTY) {
-        mMoves[piecePos[0]][piecePos[1] - 1] = 1;
+        mMoves[0][piecePos[0]][piecePos[1] - 1] = 1;
     }
 
     // check if pawn can attack
@@ -644,7 +645,7 @@ void ChessBoard::getPawnMoves(int8_t piecePos[], Color color) {
         Piece piece = mBoard[piecePos[0] - 1][piecePos[1] - 1];
 
         if (piece != Piece::EMPTY && getPieceColor(piece) != color && piece != Piece::WHITE_KING && piece != Piece::BLACK_KING) {
-            mMoves[piecePos[0] - 1][piecePos[1] - 1] = 1;
+            mMoves[0][piecePos[0] - 1][piecePos[1] - 1] = 1;
         }
     }
 
@@ -652,15 +653,17 @@ void ChessBoard::getPawnMoves(int8_t piecePos[], Color color) {
         Piece piece = mBoard[piecePos[0] + 1][piecePos[1] - 1];
 
         if (piece != Piece::EMPTY && getPieceColor(piece) != color && piece != Piece::WHITE_KING && piece != Piece::BLACK_KING) {
-            mMoves[piecePos[0] + 1][piecePos[1] - 1] = 1;
+            mMoves[0][piecePos[0] + 1][piecePos[1] - 1] = 1;
         }
     }
 }
 
 void ChessBoard::drawMoves() {
+    uint8_t pieceIdx = getPieceIdx(mBoard[mSelectedPiecePos[0]][mSelectedPiecePos[1]]);
+
     for (uint8_t row = 0; row < 4; row++) {
         for (uint8_t col = 0; col < 5; col++) {
-            if (!mMoves[row][col]) {
+            if (!mMoves[pieceIdx][row][col]) {
                 continue;
             }
 
@@ -683,12 +686,11 @@ void ChessBoard::selectPiece(int8_t piecePos[], int8_t moveSelectionPos[]) {
     mSelectedPiecePos[0] = piecePos[0];
     mSelectedPiecePos[1] = piecePos[1];
 
-    getPossibleMoves();
-    validateMoves();
+    uint8_t pieceIdx = getPieceIdx(mBoard[mSelectedPiecePos[0]][mSelectedPiecePos[1]]);
 
     for (uint8_t row = 0; row < 4; row++) {
         for (uint8_t col = 0; col < 5; col++) {
-            if (mMoves[row][col]) {
+            if (mMoves[pieceIdx][row][col]) {
                 moveSelectionPos[0] = row;
                 moveSelectionPos[1] = col;
                 break;
@@ -753,13 +755,13 @@ void ChessBoard::getBishopMoves(int8_t piecePos[], Color color) {
 
             if (piece != Piece::EMPTY) {
                 if (getPieceColor(piece) != color && piece != Piece::WHITE_KING && piece != Piece::BLACK_KING) {
-                    mMoves[currPos[0]][currPos[1]] = 1;
+                    mMoves[1][currPos[0]][currPos[1]] = 1;
                 }
 
                 break;
             }
 
-            mMoves[currPos[0]][currPos[1]] = 1;
+            mMoves[1][currPos[0]][currPos[1]] = 1;
 
             currPos[0] += directions[i][0];
             currPos[1] += directions[i][1];
@@ -792,7 +794,7 @@ void ChessBoard::getKnightMoves(int8_t piecePos[], Color color) {
         Piece piece = mBoard[currPos[0]][currPos[1]];
 
         if (piece == Piece::EMPTY || (getPieceColor(piece) != color && piece != Piece::WHITE_KING && piece != Piece::BLACK_KING)) {
-            mMoves[currPos[0]][currPos[1]] = 1;
+            mMoves[2][currPos[0]][currPos[1]] = 1;
         }
     }
 }
@@ -815,13 +817,13 @@ void ChessBoard::getRookMoves(int8_t piecePos[], Color color) {
 
             if (piece != Piece::EMPTY) {
                 if (getPieceColor(piece) != color && piece != Piece::WHITE_KING && piece != Piece::BLACK_KING) {
-                    mMoves[currPos[0]][currPos[1]] = 1;
+                    mMoves[3][currPos[0]][currPos[1]] = 1;
                 }
 
                 break;
             }
 
-            mMoves[currPos[0]][currPos[1]] = 1;
+            mMoves[3][currPos[0]][currPos[1]] = 1;
 
             currPos[0] += directions[i][0];
             currPos[1] += directions[i][1];
@@ -850,19 +852,22 @@ void ChessBoard::getKingMoves(int8_t piecePos[], Color color) {
             Piece piece = mBoard[currPos[0]][currPos[1]];
 
             if ((piece != Piece::EMPTY && getPieceColor(piece) != color && piece != Piece::WHITE_KING && piece != Piece::BLACK_KING) || piece == Piece::EMPTY) {
-                mMoves[currPos[0]][currPos[1]] = 1;
+                mMoves[4][currPos[0]][currPos[1]] = 1;
             }
         }
     }
 }
 
-void ChessBoard::validateMoves() {
+uint8_t ChessBoard::validateMoves() {
     Piece boardCopy[4][5];
     Color playerColor = getPieceColor(mBoard[mSelectedPiecePos[0]][mSelectedPiecePos[1]]);
+    uint8_t pieceIdx = getPieceIdx(mBoard[mSelectedPiecePos[0]][mSelectedPiecePos[1]]);
+
+    uint8_t moveCount = 0;
 
     for (uint8_t i = 0; i < 4; i++) {
         for (uint8_t j = 0; j < 5; j++) {
-            if (!mMoves[i][j]) {
+            if (!mMoves[pieceIdx][i][j]) {
                 continue;
             }
 
@@ -878,10 +883,14 @@ void ChessBoard::validateMoves() {
             boardCopy[mSelectedPiecePos[0]][mSelectedPiecePos[1]] = Piece::EMPTY;
 
             if (isChecked(playerColor, boardCopy)) {
-                mMoves[i][j] = 0;
+                mMoves[pieceIdx][i][j] = 0;
+            } else {
+                moveCount++;
             }
         }
     }
+
+    return moveCount;
 }
 
 bool ChessBoard::isChecked(Color playerColor, Piece board[4][5]) {
@@ -1043,4 +1052,67 @@ int8_t ChessBoard::getMoveCount() {
     }
 
     return count;
+}
+
+uint8_t ChessBoard::selectPlayer(Color playerColor, int8_t selectionPos[]) {
+    bool selectedPiece = false;
+
+    // find player's pieces
+    for (uint8_t row = 0; row < 4; row++) {
+        for (uint8_t col = 0; col < 5; col++) {
+            Piece piece = mBoard[row][col];
+            mPieces[row][col] = 0;
+
+            if (piece == Piece::EMPTY || getPieceColor(piece) != playerColor) {
+                continue;
+            }
+
+            // update moves for found piece
+            mSelectedPiecePos[0] = row;
+            mSelectedPiecePos[1] = col;
+
+            getPossibleMoves();
+            uint8_t moveCount = validateMoves();
+
+            if (moveCount && !selectedPiece) {
+                selectionPos[0] = row;
+                selectionPos[1] = col;
+
+                selectedPiece = true;
+            }
+
+            if (moveCount) {
+                mPieces[row][col] = 1;
+            }
+        }
+    }
+
+    // no possible moves (checkmate / draw)
+    if (selectedPiece == false) {
+        return 0;
+    } else {
+        return 1;
+    }
+}
+
+uint8_t ChessBoard::getPieceIdx(Piece piece) {
+    if (piece == Piece::WHITE_PAWN || piece == Piece::BLACK_PAWN) {
+        return 0;
+    }
+
+    if (piece == Piece::WHITE_BISHOP || piece == Piece::BLACK_BISHOP) {
+        return 1;
+    }
+
+    if (piece == Piece::WHITE_KNIGHT || piece == Piece::BLACK_KNIGHT) {
+        return 2;
+    }
+
+    if (piece == Piece::WHITE_ROOK || piece == Piece::BLACK_ROOK) {
+        return 3;
+    }
+
+    if (piece == Piece::WHITE_KING || piece == Piece::BLACK_KING) {
+        return 4;
+    }
 }
