@@ -26,18 +26,6 @@ void Twi::write(uint8_t data) {
     while (!(TWCR & (1<<TWINT)));
 }
 
-void Twi::read_ack(uint8_t *data) {
-	TWCR = (1<<TWINT) | (1<<TWEN) | (1<<TWEA);
-	while (!(TWCR & (1<<TWINT)));
-    *data = TWDR;
-}
-
-void Twi::read_nack(uint8_t *data) {
-    TWCR = (1<<TWINT) | (1<<TWEN);
-	while (!(TWCR & (1<<TWINT)));
-    *data = TWDR;
-}
-
 void Twi::stop(void) {
     // Send STOP condition
     TWCR = (1 << TWEN) | (1 << TWINT) | (1 << TWSTO);

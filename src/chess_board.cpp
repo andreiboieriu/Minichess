@@ -26,6 +26,12 @@ void ChessBoard::reset() {
     mBoard[3][0] = Piece::WHITE_KING;
     mBoard[3][1] = Piece::WHITE_PAWN;
     mBoard[3][4] = Piece::BLACK_ROOK;
+
+    mSelectedPiecePos[0] = 0;
+    mSelectedPiecePos[1] = 0;
+
+    mWhitePawnMoved = false;
+    mBlackPawnMoved = false;
 }
 
 void ChessBoard::drawBoard() {
@@ -1036,7 +1042,15 @@ void ChessBoard::moveSelectedPiece(int8_t dest[]) {
         mBlackPawnMoved = true;
     }
 
-    mBoard[dest[0]][dest[1]] = mBoard[mSelectedPiecePos[0]][mSelectedPiecePos[1]];
+    Piece piece = mBoard[mSelectedPiecePos[0]][mSelectedPiecePos[1]];
+
+    // pawn upgrade
+    if ((piece == Piece::WHITE_PAWN && dest[1] == 4) ||
+        (piece == Piece::BLACK_PAWN && dest[1] == 0)) {
+        piece = (piece == Piece::WHITE_PAWN) ? Piece::WHITE_ROOK : Piece::BLACK_ROOK;
+    }
+
+    mBoard[dest[0]][dest[1]] = piece;
     mBoard[mSelectedPiecePos[0]][mSelectedPiecePos[1]] = Piece::EMPTY;
 }
 
@@ -1116,3 +1130,58 @@ uint8_t ChessBoard::getPieceIdx(Piece piece) {
         return 4;
     }
 }
+
+bool ChessBoard::insufficientMaterial() {
+    uint8_t whiteMaterial = 0;
+    uint8_t blackMaterial = 0;
+
+    for (uint8_t row = 0; row < 4; row++) {
+        for (uint8_t col = 0; col < 5; col++) {
+            Piece piece = mBoard[row][col];
+
+            if (piece == Piece::EMPTY) {
+                continue;
+            }
+
+            switch (piece) {
+                case Piece::WHITE_PAWN:
+                    whiteMaterial += 5;
+                    break;
+
+                case Piece::WHITE_BISHOP:
+                    whiteMaterial += 3;
+                    break;
+
+                case Piece::WHITE_KNIGHT:
+                    whiteMaterial += 3;
+                    break;
+
+                case Piece::WHITE_ROOK:
+                    whiteMaterial += 5;
+                    break;
+
+                case Piece::BLACK_PAWN:
+                    blackMaterial += 5;
+                    break;
+
+                case Piece::BLACK_BISHOP:
+                    blackMaterial += 3;
+                    break;
+
+                case Piece::BLACK_KNIGHT:   
+                    blackMaterial += 3;
+                    break;
+
+                case Piece::BLACK_ROOK:
+                    blackMaterial += 5;
+                    break;
+
+                default:
+                    break;
+            }
+        }
+    }
+
+    return (whiteMaterial <= 3 && blackMaterial <= 3);
+}
+

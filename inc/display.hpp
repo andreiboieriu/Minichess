@@ -10,10 +10,6 @@ public:
     Display(Twi &twi, Uart &uart);
     void display();
 
-    void fill() {
-        memset(mBuffer, 255, 1024);
-    }
-
     void clear() {
         memset(mBuffer, 0, 1024);
     }

@@ -9,9 +9,9 @@ Button ButtonManager::getButtonPress() {
 
     if (value <= 815 && value >= 785) {
         return Button::LEFT;
-    } else if (value <= 755 && value >= 725) {
+    } else if (value <= 770 && value >= 700) {
         return Button::RIGHT;
-    } else if (value <= 885 && value >= 855) {
+    } else if (value <= 900 && value >= 840) {
         return Button::UP;
     } else if (value <= 1019 && value >= 1009) {
         return Button::DOWN;

@@ -43,11 +43,15 @@ void Minichess::run() {
                 break;
 
             case State::SELECTING_PIECE:
-                pieceSelection(input, chessBoard, elapsedTime);
+                pieceSelection(input, chessBoard, elapsedTime, textRenderer);
                 break;
 
             case State::SELECTING_MOVE:
-                moveSelection(input, chessBoard, elapsedTime);
+                moveSelection(input, chessBoard, elapsedTime, textRenderer);
+                break;
+
+            case State::END_SCREEN:
+                endScreen(chessBoard, textRenderer, elapsedTime);
                 break;
         }
 
@@ -90,8 +94,11 @@ void Minichess::mainMenu(Button input, TextRenderer &textRenderer, unsigned long
     }
 }
 
-void Minichess::pieceSelection(Button input, ChessBoard &chessBoard, unsigned long elapsedTime) {
+void Minichess::pieceSelection(Button input, ChessBoard &chessBoard, unsigned long elapsedTime, TextRenderer &textRenderer) {
     chessBoard.drawBoard();
+
+    textRenderer.renderString(3, 10, "select", 3);
+    textRenderer.renderString(4, 10, "piece", 6);
 
     mTimeTilFlicker -= elapsedTime;
 
@@ -153,8 +160,11 @@ void Minichess::pieceSelection(Button input, ChessBoard &chessBoard, unsigned lo
     }
 }
 
-void Minichess::moveSelection(Button input, ChessBoard &chessBoard, unsigned long elapsedTime) {
+void Minichess::moveSelection(Button input, ChessBoard &chessBoard, unsigned long elapsedTime, TextRenderer &textRenderer) {
     chessBoard.drawBoard();
+
+    textRenderer.renderString(3, 10, "select", 3);
+    textRenderer.renderString(4, 11, "move", 3);
 
     mPieceSelectionColor = chessBoard.getSquareDominantColor(mPieceSelectionPos[0], mPieceSelectionPos[1]);
 
@@ -222,7 +232,20 @@ void Minichess::moveSelection(Button input, ChessBoard &chessBoard, unsigned lon
         }
 
         if (!res) {
-            // TODO: checkmate / draw
+            if (chessBoard.isChecked(mPlayerColor)) {
+                mGameResult = (mPlayerColor == Color::BLACK) ? GameResult::WHITE_WON : GameResult::BLACK_WON;
+            } else {
+                mGameResult = GameResult::DRAW;
+            }
+
+            mState = State::END_SCREEN;
+        }
+
+        // check insufficient material
+        if (chessBoard.insufficientMaterial()) {
+            mGameResult = GameResult::DRAW;
+
+            mState = State::END_SCREEN;
         }
     }
 
@@ -258,5 +281,30 @@ void Minichess::moveSelection(Button input, ChessBoard &chessBoard, unsigned lon
 
     if (!mCanFlickerSelection) {
         chessBoard.drawSelection(mMoveSelectionPos[0], mMoveSelectionPos[1], mMoveSelectionColor);
+    }
+}
+
+void Minichess::endScreen(ChessBoard &chessBoard, TextRenderer& textRenderer, unsigned long elapsedTime) {
+    mEndScreenTimeLeft -= elapsedTime;
+
+    if (mEndScreenTimeLeft <= 0) {
+        mState = State::MAIN_MENU;
+        chessBoard.reset();
+        mPlayerColor = Color::WHITE;
+
+        mEndScreenTimeLeft = mEndScreenTime;
+        return;
+    }
+
+    chessBoard.drawBoard();
+
+    if (mGameResult == GameResult::DRAW) {
+        textRenderer.renderString(3, 11, "Draw!", 0);
+    } else if (mGameResult == GameResult::WHITE_WON) {
+        textRenderer.renderString(3, 10, "White", 6);
+        textRenderer.renderString(4, 11, "wins!", 0);
+    } else {
+        textRenderer.renderString(3, 10, "Black", 6);
+        textRenderer.renderString(4, 11, "wins!", 0);
     }
 }

@@ -33,6 +33,8 @@ public:
     void drawBoard();
     void drawSelection(uint8_t row, uint8_t col, Color color);
 
+    bool insufficientMaterial();
+
     void drawMoves();
     int8_t getMoveCount();
     void selectPiece(int8_t piecePos[], int8_t moveSelectionPos[]);
@@ -41,6 +43,9 @@ public:
 
     void movePieceSelection(Button input, int8_t selectionPos[]);
     void moveMoveSelection(Button input, int8_t selectionPos[]);
+    bool isChecked(Color playerColor) {
+        return isChecked(playerColor, mBoard);
+    }
 
     Color getSquareDominantColor(uint8_t row, uint8_t col);
 

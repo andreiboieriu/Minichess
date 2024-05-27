@@ -20,13 +20,21 @@ private:
     enum class State {
         MAIN_MENU,
         SELECTING_PIECE,
-        SELECTING_MOVE
+        SELECTING_MOVE,
+        END_SCREEN
+    };
+
+    enum class GameResult {
+        WHITE_WON,
+        BLACK_WON,
+        DRAW
     };
 
     void init();
     void mainMenu(Button input, TextRenderer &textRenderer, unsigned long elapsedTime, ChessBoard &chessBoard);
-    void pieceSelection(Button input, ChessBoard &chessBoard, unsigned long elapsedTime);
-    void moveSelection(Button input, ChessBoard &chessBoard, unsigned long elapsedTime);
+    void pieceSelection(Button input, ChessBoard &chessBoard, unsigned long elapsedTime, TextRenderer &textRenderer);
+    void moveSelection(Button input, ChessBoard &chessBoard, unsigned long elapsedTime, TextRenderer &textRenderer);
+    void endScreen(ChessBoard &chessBoard, TextRenderer& textRenderer, unsigned long elapsedTime);
 
     State mState;
 
@@ -44,6 +52,9 @@ private:
     Color mPieceSelectionColor = Color::BLACK;
     Color mMoveSelectionColor = Color::BLACK;
 
+    const int16_t mEndScreenTime = 7000;
+    int16_t mEndScreenTimeLeft = mEndScreenTime;
+
     int8_t mPieceSelectionPos[2] = {0, 0};
     int8_t mMoveSelectionPos[2] = {0, 0};
 
@@ -54,4 +65,5 @@ private:
     int16_t mTimeTilClick = mClickCooldown;
 
     Color mPlayerColor = Color::WHITE;
+    GameResult mGameResult;
 };
